@@ -1,0 +1,3 @@
+#: i18n_example.py:60
+msgid "Hello, <b>{user}</b>!"
+msgstr ""
