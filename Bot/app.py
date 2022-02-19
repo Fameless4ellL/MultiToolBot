@@ -34,7 +34,6 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-# storage = MongoStorage(uri='mongodb+srv://zaur:21066@cluster0.heue0.mongodb.net/myFirstDatabase')
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 inline_timepicker = InlineTimepicker()
