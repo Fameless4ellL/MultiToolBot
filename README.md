@@ -1,4 +1,5 @@
-#**Content**
+#Content
+
 1. [Introduction](#Introduction)
 1. [Subject](#Subject)
 1. [Objective/goal](#Objective/goal)
@@ -38,24 +39,34 @@
 1. [Bibliography](#Bibliography)
 
 ##Introduction
+
 A chatbot is a program that finds out the needs of users and then helps meet them. Automatic communication with the user is carried out using text or voice. The chatbot communicates on behalf of the company or brand to simplify online communication (to provide up-to-date information in the most expeditious time), it is used as an alternative to correspondence with a live operator or a call to the company manager.
 
 ##Subject
+
 This chatbot is designed to perform many small tasks that will help minimize time and increase efficiency at work or school.
 	<p>Most of the working hour is spent in finding answers, locating files, doing research, scheduling meetings, coordinating with colleagues, and other ordinary tasks. Multi-tool chatbot will help focus on what matters for achieving goals and improving job satisfaction.</p>
 
 ##Objective/goal
+
 In this project, it is planned to add features such as reminders, schedule organizer, timer, Scan document and convert them to pdf to increase productivity that will help society make their work more comfortable and productive.
+
 ![Image](imgs/algorithms%20of%20bots.png)
+
 Projects with a similar goal:
 - Zoom.ai - an automated virtual assistant that can handle meeting scheduling, research, introductions, reminders, travel, and more.
 - Jarvis - bot for FB Messenger to remind to get stuff done.
 - Me - reminder assistant.
 - Xeet - xeet organizes all group events automatically by inviting, reminding, and keeping up to date with all group members.
+
 ##Framework
+
 Common approach is to use a V-model to verify that software meets the requirements. the left branch of the V-model begins with system-level requirements, which leads to architecture and design. The tip of the V-model is the implementation phase to convert the design into code implementation. The right branch represents the testing of the System, starting with unit tests in code to integration tests of different subsystems.
+
 ![Image](imgs/V-model.png)
+
 ##Telegram bot
+
 Telegram uses MTProto encryption protocol. The MTProto API (aka Telegram API) is the API through which the Telegram application communicates with the server. The Telegram API is fully open, so any developer can write their messenger client. To write bots, the Telegram Bot API was created — an add-on to the Telegram API.
 <p>To use the Bot API, you don't need to know anything about how the MTProto encryption protocol works — our auxiliary server will handle all the encryption and communication with the Telegram API itself. There is a connection to the server via a simple HTTPS interface, which provides a simple version of the Telegram API.</p>
 Among the simplifications of the Bot API:
@@ -69,11 +80,15 @@ The bot must also be able to send requests to the Telegram server and receive up
 - Webhook — make sure that Telegram itself sends requests to the desired URL.
 
 Creating a bot is done through a special bot [@BotFather](https://telegram.me/BotFather). When the bot was created, BotFather will give the token
+
 ![Image](imgs/Example%20%20of%20creating%20a%20token.png)
+
 When the user launches the bot for the first time with the start command, he sees the "Start" button. By clicking on this button, the /start command is sent. Each Telegram user, bot, group, or channel has its unique ID.
 
 The bot can't get old messages from the chat. The bot can't get a list of all its users. All the bot can get is information about updates. This is the main difficulty of developing bots. It is possible to get information about new messages in the bot and other events, but only once.
+
 ##Developing a skeleton
+
 To develop the "skeleton" of the bot, you need to import the necessary aiogram library modules and the bot token, as well as initialize the bot and dispatcher objects:
 
     from aiogram import Bot, Dispatcher, executor, types
@@ -196,7 +211,7 @@ If the variable is appropriately assigned, the bot will proceed to the next func
         await Form.next()
         await message.reply("How old are you?")
 
-The bot will remain in the current state for each wrong data entry until the user inputs the correct variable or cancels it. In the process_age_invalid function, for example, the bot asks the user how old he is when inputting characters, and it will continue to question the user until he provides a number.
+The bot will remain in the current state for each wrong data entry until the user inputs the correct variable or cancels it. In the `process_age_invalid` function, for example, the bot asks the user how old he is when inputting characters, and it will continue to question the user until he provides a number.
 
     # Check age. Age gotta be digit
     @dp.message_handler(lambda message: not message.text.isdigit(), state=Form.age)
@@ -206,7 +221,7 @@ The bot will remain in the current state for each wrong data entry until the use
         """
         return await message.reply("Age gotta be a number.\nHow old are you? (digits only)")
 
-Finally, when the user assigns the Form.age variable, the next state is triggered. The bot will invoke the process_finish function, which will save the Form.age and deliver a welcome message including the previously entered values. When the bot no longer requires variables, it exits this mode (FSM) state.finish().
+Finally, when the user assigns the Form.age variable, the next state is triggered. The bot will invoke the `process_finish` function, which will save the Form.age and deliver a welcome message including the previously entered values. When the bot no longer requires variables, it exits this mode (FSM) `state.finish()`.
 
     @dp.message_handler(state=Form.age)
     async def process_finish(message: types.Message, state: FSMContext):
